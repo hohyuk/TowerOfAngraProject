@@ -1,0 +1,41 @@
+// Fill out your copyright notice in the Description page of Project Settings.
+
+#include "LevelChanger.h"
+#include "Engine.h"
+// Sets default values
+ALevelChanger::ALevelChanger()
+{
+ 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	PrimaryActorTick.bCanEverTick = true;
+	OverlapVolume = CreateDefaultSubobject<UBoxComponent>(TEXT("OverlapVolume"));
+	RootComponent = OverlapVolume;
+
+	OverlapVolume->OnComponentBeginOverlap.AddUniqueDynamic(this, &ALevelChanger::OverlapBegins);
+}
+
+// Called when the game starts or when spawned
+void ALevelChanger::BeginPlay()
+{
+	Super::BeginPlay();
+	
+}
+
+// Called every frame
+void ALevelChanger::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+}
+
+void ALevelChanger::OverlapBegins(UPrimitiveComponent * OverlappedComponent, AActor * OtherActor, UPrimitiveComponent * OtherComponent, int32 OtherbodyIdx, bool bFromSweep, const FHitResult & SweepHit)
+{
+	ACharacter* MyChar = UGameplayStatics::GetPlayerCharacter(this, 0);
+	if (OtherActor == MyChar && LoadLevelName != "")
+	{
+		FLatentActionInfo ActionInfo;
+		UGameplayStatics::LoadStreamLevel(this, LoadLevelName, true, true, ActionInfo);
+		UGameplayStatics::UnloadStreamLevel(this, UnLoadLevelName, ActionInfo, true);
+		
+	}
+}
+
