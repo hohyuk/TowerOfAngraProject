@@ -12,7 +12,7 @@ class AprojectlevelGameMode : public AGameModeBase
 	GENERATED_BODY()
 private:
 	FName LoadFirstLevel;
-
+	
 public:
 	AprojectlevelGameMode();
 };
