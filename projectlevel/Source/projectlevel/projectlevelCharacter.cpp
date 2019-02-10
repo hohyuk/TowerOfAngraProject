@@ -48,7 +48,7 @@ AprojectlevelCharacter::AprojectlevelCharacter()
 	//Create a New Skeletal Mesh
 	static ConstructorHelpers::FObjectFinder<USkeletalMesh> CharacterMesh(TEXT("/Game/Mannequin/Character/Mesh/SK_Mannequin"));
 	GetMesh()->SetSkeletalMesh(CharacterMesh.Object);
-	GetMesh()->SetWorldLocation(FVector(0, 0, -90.f), false, NULL, ETeleportType::None);
+	GetMesh()->SetWorldLocation(FVector(0, 0, -95.f), false, NULL, ETeleportType::None);
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
 }
@@ -63,6 +63,11 @@ void AprojectlevelCharacter::SetupPlayerInputComponent(class UInputComponent* Pl
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
 
+	//Custom Action Key
+	PlayerInputComponent->BindAction("Attack", IE_Pressed, this, &AprojectlevelCharacter::Attack);
+	PlayerInputComponent->BindAction("Skill", IE_Pressed, this, &AprojectlevelCharacter::Skill);
+	PlayerInputComponent->BindAction("ToggleSkill", IE_Pressed, this, &AprojectlevelCharacter::ToggleSkill);
+	
 	PlayerInputComponent->BindAxis("MoveForward", this, &AprojectlevelCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &AprojectlevelCharacter::MoveRight);
 
@@ -74,29 +79,25 @@ void AprojectlevelCharacter::SetupPlayerInputComponent(class UInputComponent* Pl
 	PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
 	PlayerInputComponent->BindAxis("LookUpRate", this, &AprojectlevelCharacter::LookUpAtRate);
 
-	// handle touch devices
-	PlayerInputComponent->BindTouch(IE_Pressed, this, &AprojectlevelCharacter::TouchStarted);
-	PlayerInputComponent->BindTouch(IE_Released, this, &AprojectlevelCharacter::TouchStopped);
-
-	// VR headset functionality
-	PlayerInputComponent->BindAction("ResetVR", IE_Pressed, this, &AprojectlevelCharacter::OnResetVR);
 }
 
 
-void AprojectlevelCharacter::OnResetVR()
+void AprojectlevelCharacter::ToggleSkill()
 {
-	UHeadMountedDisplayFunctionLibrary::ResetOrientationAndPosition();
+	GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Blue, TEXT("Toggle Skill."));
 }
 
-void AprojectlevelCharacter::TouchStarted(ETouchIndex::Type FingerIndex, FVector Location)
+void AprojectlevelCharacter::Attack()
 {
-		Jump();
+	GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Blue, TEXT("Attack Enemy."));
 }
 
-void AprojectlevelCharacter::TouchStopped(ETouchIndex::Type FingerIndex, FVector Location)
+void AprojectlevelCharacter::Skill()
 {
-		StopJumping();
+	GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Blue, TEXT("Using Skill."));
 }
+
+
 
 void AprojectlevelCharacter::TurnAtRate(float Rate)
 {

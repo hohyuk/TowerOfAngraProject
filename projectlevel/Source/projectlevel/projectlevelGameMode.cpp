@@ -9,10 +9,10 @@ AprojectlevelGameMode::AprojectlevelGameMode()
 {
 	LoadFirstLevel = "NewWorld_1";
 	// set default pawn class to our Blueprinted character
-	static ConstructorHelpers::FClassFinder<APawn> PlayerPawnBPClass(TEXT("/Game/TowerofAngra/Character/MyprojectlevelCharacter"));
+	static ConstructorHelpers::FClassFinder<ACharacter> PlayerPawnBPClass(TEXT("/Game/TowerofAngra/Character/MyprojectlevelCharacter"));
 	if (PlayerPawnBPClass.Class != NULL)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow,TEXT("I'm Alive."));
+		
 		DefaultPawnClass = PlayerPawnBPClass.Class;
 	}
 	
