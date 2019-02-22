@@ -25,8 +25,15 @@ public:
 	UPROPERTY(EditAnywhere)
 		class UStaticMeshComponent* OriginBuild;
 	UPROPERTY(EditAnywhere)
-		TArray<class UStaticMeshComponent*> BuildingMeshs;
+		TArray<class UStaticMeshComponent*> Buildings;
 	UPROPERTY(EditAnywhere)
 		int BuildNum;
-	virtual void Constructor(int num);
+	UFUNCTION()	
+		void Constructor(int num);
+
+
+	FActorSpawnParameters Spawninfo;
+	FVector SpawnLocation;
+	FRotator SpawnRotation;
+	FVector SpwanScale;
 };

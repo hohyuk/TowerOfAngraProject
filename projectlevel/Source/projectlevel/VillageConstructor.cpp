@@ -1,23 +1,31 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "VillageConstructor.h"
 #include "Components/StaticMeshComponent.h"
+#include "ConstructorHelpers.h"
+#include "Engine.h"
 
 // Sets default values
 AVillageConstructor::AVillageConstructor()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	OriginBuild = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Origin Mesh Data"));
 	OriginBuild->SetupAttachment(RootComponent);
-	Constructor(BuildNum);
+	//Set Buildings Array
+
 }
+	
+
 
 // Called when the game starts or when spawned
 void AVillageConstructor::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	UStaticMeshComponent* Temp;
+	Temp = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Copyed_Data"));
+	Buildings.Init(Temp, BuildNum);
+	GetWorld()->SpawnActor<AVillageConstructor>(SpawnLocation,SpawnRotation,Spawninfo);
 }
 
 // Called every frame
@@ -29,13 +37,6 @@ void AVillageConstructor::Tick(float DeltaTime)
 
 void AVillageConstructor::Constructor(int num)
 {
-	for (int i = 0; i < num; i++)
-	{
-		FVector Location(FMath::FRandRange(-1000,1000), FMath::FRandRange(-1000, 1000),0);
-		FRotator Rotation(0, FMath::FRandRange(-360, 360), FMath::FRandRange(-10, 10));
-		OriginBuild->SetWorldLocationAndRotation(Location, Rotation, false, nullptr, ETeleportType::None);
-		BuildingMeshs.Add(OriginBuild);
-		
-	}
+
 }
 
