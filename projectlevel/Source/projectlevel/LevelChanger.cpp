@@ -8,8 +8,9 @@ ALevelChanger::ALevelChanger()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	OverlapVolume = CreateDefaultSubobject<UBoxComponent>(TEXT("OverlapVolume"));
+	MileStone = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MileStone"));
 	RootComponent = OverlapVolume;
-
+	MileStone->SetupAttachment(RootComponent);
 	OverlapVolume->OnComponentBeginOverlap.AddUniqueDynamic(this, &ALevelChanger::OverlapBegins);
 }
 
@@ -35,11 +36,13 @@ void ALevelChanger::OverlapBegins(UPrimitiveComponent * OverlappedComponent, AAc
 		FLatentActionInfo ActionInfo;
 		UGameplayStatics::LoadStreamLevel(this, LoadLevelName, true, true, ActionInfo);
 		UGameplayStatics::UnloadStreamLevel(this, UnLoadLevelName, ActionInfo, true);
+		MileStone->SetWorldScale3D(FVector(0, 0, 0));
 		
 	}
 	if (OtherActor == MyChar && LoadLevelName == "TestGridMap")
 	{
 		UGameplayStatics::OpenLevel(this, LoadLevelName);
+		MileStone->SetWorldScale3D(FVector(0, 0, 0));
 	}
 }
 

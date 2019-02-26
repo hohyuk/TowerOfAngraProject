@@ -29,6 +29,8 @@ public:
 		FName LoadLevelName;
 	UPROPERTY(EditAnywhere)
 		FName UnLoadLevelName;
+	UPROPERTY(EditAnywhere)
+		class UStaticMeshComponent* MileStone;
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 		class UBoxComponent* OverlapVolume;

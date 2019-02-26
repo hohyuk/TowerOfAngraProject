@@ -28,5 +28,8 @@ public:
 		int XPibot;
 	UPROPERTY(EditAnywhere)
 		int YPibot;
-	
+	UPROPERTY(EditAnywhere)
+		float interval;
+	UPROPERTY(EditAnywhere)
+		UMaterial* InstMat;
 };
