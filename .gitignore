@@ -1736,3 +1736,9 @@ projectlevel/Content/InfinityBladeWeapons/Weapons/Blade/Silly_Weapons/Blade_Driv
 projectlevel/Content/InfinityBladeWeapons/Weapons/Blade/Axes/Blade_Hatchet02/T_Blade_Hatchet021_M.uasset
 projectlevel/Content/InfinityBladeWeapons/Weapons/Blade/Axes/Blade_Hatchet02/T_Blade_Hatchet021_D.uasset
 projectlevel/Content/InfinityBladeWeapons/Weapons/Blade/Axes/Blade_GreatBlade/SK_Blade_GreatBlade_Skeleton.uasset
+projectlevel/.vscode/c_cpp_properties.json
+projectlevel/projectlevel.code-workspace
+projectlevel/.vscode/launch.json
+projectlevel/.vscode/settings.json
+projectlevel/.vscode/tasks.json
+projectlevel/Config/DefaultEditorSettings.ini

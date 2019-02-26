@@ -25,15 +25,18 @@ public:
 	UPROPERTY(EditAnywhere)
 		class UStaticMeshComponent* OriginBuild;
 	UPROPERTY(EditAnywhere)
-		TArray<class UStaticMeshComponent*> Buildings;
+		class UBoxComponent* CollisionVolume;
+	UPROPERTY(EditAnywhere)
+		class UMaterial* OriginMaterial;
+	UPROPERTY(EditAnywhere)
+		class UMaterial* ChangedMaterial;
 	UPROPERTY(EditAnywhere)
 		int BuildNum;
 	UFUNCTION()	
 		void Constructor(int num);
+	UFUNCTION()
+		void OverlapBegins(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, int32 OtherbodyIdx, bool bFromSweep, const FHitResult& SweepHit);
+	UPROPERTY()
+		int Count;
 
-
-	FActorSpawnParameters Spawninfo;
-	FVector SpawnLocation;
-	FRotator SpawnRotation;
-	FVector SpwanScale;
 };

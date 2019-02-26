@@ -37,5 +37,9 @@ void ALevelChanger::OverlapBegins(UPrimitiveComponent * OverlappedComponent, AAc
 		UGameplayStatics::UnloadStreamLevel(this, UnLoadLevelName, ActionInfo, true);
 		
 	}
+	if (OtherActor == MyChar && LoadLevelName == "TestGridMap")
+	{
+		UGameplayStatics::OpenLevel(this, LoadLevelName);
+	}
 }
 
