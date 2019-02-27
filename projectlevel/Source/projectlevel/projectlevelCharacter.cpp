@@ -11,6 +11,7 @@
 #include "ConstructorHelpers.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Engine.h"
+#include "VillageConstructor.h"
 //////////////////////////////////////////////////////////////////////////
 // AprojectlevelCharacter
 
@@ -49,6 +50,8 @@ AprojectlevelCharacter::AprojectlevelCharacter()
 	static ConstructorHelpers::FObjectFinder<USkeletalMesh> CharacterMesh(TEXT("/Game/Mannequin/Character/Mesh/SK_Mannequin"));
 	GetMesh()->SetSkeletalMesh(CharacterMesh.Object);
 	GetMesh()->SetWorldLocation(FVector(0, 0, -95.f), false, NULL, ETeleportType::None);
+
+
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
 }
@@ -81,10 +84,21 @@ void AprojectlevelCharacter::SetupPlayerInputComponent(class UInputComponent* Pl
 
 }
 
-
 void AprojectlevelCharacter::ToggleSkill()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Blue, TEXT("Toggle Skill."));
+	if (Spawn)
+	{
+		UWorld* world = GetWorld();
+		if (world)
+		{
+			FActorSpawnParameters Sparam;
+			Sparam.Owner = this;
+			FRotator rotate;
+			FVector Location = this->GetActorLocation() + FVector(200, 0, 0);
+
+			world->SpawnActor<AVillageConstructor>(Spawn, Location, rotate, Sparam);
+		}
+	}
 }
 
 void AprojectlevelCharacter::Attack()

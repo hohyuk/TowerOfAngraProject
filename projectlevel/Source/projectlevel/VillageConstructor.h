@@ -27,16 +27,10 @@ public:
 	UPROPERTY(EditAnywhere)
 		class UBoxComponent* CollisionVolume;
 	UPROPERTY(EditAnywhere)
-		class UMaterial* OriginMaterial;
-	UPROPERTY(EditAnywhere)
-		class UMaterial* ChangedMaterial;
-	UPROPERTY(EditAnywhere)
-		int BuildNum;
-	UFUNCTION()	
-		void Constructor(int num);
+		class UMaterial* OriginMaterial;	
 	UFUNCTION()
 		void OverlapBegins(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, int32 OtherbodyIdx, bool bFromSweep, const FHitResult& SweepHit);
-	UPROPERTY()
-		int Count;
+	UPROPERTY(EditAnywhere)
+		TSubclassOf<class AActor> Spawn;
 
 };

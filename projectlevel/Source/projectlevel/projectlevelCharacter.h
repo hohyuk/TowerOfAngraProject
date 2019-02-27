@@ -29,7 +29,8 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
 	float BaseLookUpRate;
 
-
+	UPROPERTY(EditAnywhere)
+		TSubclassOf<class AVillageConstructor> Spawn;
 
 protected:
 
@@ -57,6 +58,7 @@ protected:
 	void Attack();
 
 	void Skill();
+
 
 
 protected:

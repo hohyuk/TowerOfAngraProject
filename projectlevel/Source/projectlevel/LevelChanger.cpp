@@ -10,7 +10,9 @@ ALevelChanger::ALevelChanger()
 	OverlapVolume = CreateDefaultSubobject<UBoxComponent>(TEXT("OverlapVolume"));
 	MileStone = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MileStone"));
 	RootComponent = OverlapVolume;
-	MileStone->SetupAttachment(RootComponent);
+	
+	//MileStone->SetupAttachment(RootComponent);
+	MileStone->SetCollisionProfileName("OverlapAll");
 	OverlapVolume->OnComponentBeginOverlap.AddUniqueDynamic(this, &ALevelChanger::OverlapBegins);
 }
 
@@ -18,7 +20,9 @@ ALevelChanger::ALevelChanger()
 void ALevelChanger::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	FVector SetLocation;
+	SetLocation = FVector(0, 0, 150);
+	MileStone->SetRelativeLocation(SetLocation);
 }
 
 // Called every frame
@@ -41,7 +45,9 @@ void ALevelChanger::OverlapBegins(UPrimitiveComponent * OverlappedComponent, AAc
 	}
 	if (OtherActor == MyChar && LoadLevelName == "TestGridMap")
 	{
+		
 		UGameplayStatics::OpenLevel(this, LoadLevelName);
+
 		MileStone->SetWorldScale3D(FVector(0, 0, 0));
 	}
 }

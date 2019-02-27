@@ -21,7 +21,6 @@ AVillageConstructor::AVillageConstructor()
 	
 	RootComponent = OriginBuild;
 	OriginMaterial = CreateDefaultSubobject<UMaterial>(TEXT("Origin Material"));
-	ChangedMaterial = CreateDefaultSubobject<UMaterial>(TEXT("Changed Material"));
 
 	OriginBuild->SetMaterial(0, OriginMaterial);
 	CollisionVolume = CreateDefaultSubobject<UBoxComponent>(TEXT("Collision Volume"));
@@ -31,7 +30,6 @@ AVillageConstructor::AVillageConstructor()
 	CollisionVolume->SetWorldLocation(FVector(200, 200, 100));
 	CollisionVolume->OnComponentBeginOverlap.AddUniqueDynamic(this, &AVillageConstructor::OverlapBegins);
 
-	Count = 0;
 
 }
 
@@ -54,20 +52,25 @@ void AVillageConstructor::Tick(float DeltaTime)
 
 }
 
-void AVillageConstructor::Constructor(int num)
-{
 
-}
 
 void AVillageConstructor::OverlapBegins(UPrimitiveComponent * OverlappedComponent, AActor * OtherActor, UPrimitiveComponent * OtherComponent, int32 OtherbodyIdx, bool bFromSweep, const FHitResult & SweepHit)
 {
 	if ((OtherActor != nullptr) && (OtherActor != this) && (OtherComponent != nullptr))	
 	{	
-		Count++;
-		if((Count%2)==1)
-			OriginBuild->SetMaterial(0, ChangedMaterial);
-		else
-			OriginBuild->SetMaterial(0, OriginMaterial);
+		if (Spawn)
+		{
+			UWorld* world = GetWorld();
+			if (world)
+			{
+				FActorSpawnParameters Sparam;
+				Sparam.Owner = this;
+				FRotator rotate;
+				FVector Location = this->GetActorLocation() + FVector(200, 0, 0);
+
+				world->SpawnActor<AActor>(Spawn, Location, rotate, Sparam);
+			}
+		}
 	}
 }
 
