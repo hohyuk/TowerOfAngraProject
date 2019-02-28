@@ -14,20 +14,21 @@ AInstancedStaticMesh::AInstancedStaticMesh()
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> IMesh(TEXT("/Game/TowerofAngra/Object/SM_Barrel"));
 	
 	RootComponent = InstMesh;
-	InstMesh->RegisterComponent();
 	
-	InstMesh->SetStaticMesh(IMesh.Object);
+	
+	//InstMesh->SetStaticMesh(IMesh.Object);
 
-	InstMesh->SetMaterial(0,InstMat);
-	InstMesh->SetFlags(RF_Transactional);
-	this->AddInstanceComponent(InstMesh);
+	//InstMesh->SetMaterial(0,InstMat);
+
 }
 
 // Called when the game starts or when spawned
 void AInstancedStaticMesh::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	InstMesh->RegisterComponent();
+	InstMesh->SetFlags(RF_Transactional);
+	this->AddInstanceComponent(InstMesh);
 	//Set Instance Transform & Location
 	for (int x = 0; x < XPibot; x++)
 	{
