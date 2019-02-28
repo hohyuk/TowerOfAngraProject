@@ -18,6 +18,7 @@ class AprojectlevelCharacter : public ACharacter
 	/** Follow camera */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class UCameraComponent* FollowCamera;
+
 public:
 	AprojectlevelCharacter();
 
@@ -30,7 +31,8 @@ public:
 	float BaseLookUpRate;
 
 	UPROPERTY(EditAnywhere)
-		TSubclassOf<class AVillageConstructor> Spawn;
+		TSubclassOf<class AMainWeapon> Spawn;
+
 
 protected:
 
@@ -70,6 +72,6 @@ public:
 	/** Returns CameraBoom subobject **/
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/
-	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
+	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }	
 };
 

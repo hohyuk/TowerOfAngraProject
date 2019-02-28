@@ -11,7 +11,7 @@
 #include "ConstructorHelpers.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Engine.h"
-#include "VillageConstructor.h"
+#include "MainWeapon.h"
 //////////////////////////////////////////////////////////////////////////
 // AprojectlevelCharacter
 
@@ -46,11 +46,18 @@ AprojectlevelCharacter::AprojectlevelCharacter()
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName); // Attach the camera to the end of the boom and let the boom adjust to match the controller orientation
 	FollowCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
 
-	//Create a New Skeletal Mesh
+
+	//Set Character's Main Skeletal Mesh
 	static ConstructorHelpers::FObjectFinder<USkeletalMesh> CharacterMesh(TEXT("/Game/Mannequin/Character/Mesh/SK_Mannequin"));
 	GetMesh()->SetSkeletalMesh(CharacterMesh.Object);
 	GetMesh()->SetWorldLocation(FVector(0, 0, -95.f), false, NULL, ETeleportType::None);
+	GetMesh()->SetWorldRotation(FRotator(0, -90, 0), false, NULL, ETeleportType::None);
 
+	//Get Socket From Skeletal Mesh
+	
+
+	//UClass* MainWeapon = StaticLoadClass(UObject::StaticClass(), nullptr, TEXT("/Game/TowerofAngra/Weapon/MyMainWeapon"));
+	
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
@@ -86,19 +93,26 @@ void AprojectlevelCharacter::SetupPlayerInputComponent(class UInputComponent* Pl
 
 void AprojectlevelCharacter::ToggleSkill()
 {
-	if (Spawn)
+	
+	UWorld* world = GetWorld();
+	if (world)
 	{
-		UWorld* world = GetWorld();
-		if (world)
-		{
-			FActorSpawnParameters Sparam;
-			Sparam.Owner = this;
-			FRotator rotate;
-			FVector Location = this->GetActorLocation() + FVector(200, 0, 0);
-
-			world->SpawnActor<AVillageConstructor>(Spawn, Location, rotate, Sparam);
-		}
+		//Debug Log print message
+		GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Blue, TEXT("Press Button."));
+		//Set spawn infomation
+		FActorSpawnParameters Sparam;
+		Sparam.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+		Sparam.Owner = this;
+		//Spawn Actor with Static Class
+		auto Weapon = world->SpawnActor<AMainWeapon>(AMainWeapon::StaticClass(), this->GetActorLocation(), FRotator(0, 0, 0), Sparam);
+		const USkeletalMeshSocket* WeaponSocket = GetMesh()->GetSocketByName("WeaponSocket");
+		FName fnameWeapon = GetMesh()->GetSocketBoneName("middle_02_r");
+		Weapon->K2_AttachRootComponentToActor(this, fnameWeapon, EAttachLocation::SnapToTarget, true);
+			
+		FString msg = fnameWeapon.ToString();
+		GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Blue, msg);
 	}
+	
 }
 
 void AprojectlevelCharacter::Attack()

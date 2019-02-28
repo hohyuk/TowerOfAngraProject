@@ -1742,3 +1742,4 @@ projectlevel/.vscode/launch.json
 projectlevel/.vscode/settings.json
 projectlevel/.vscode/tasks.json
 projectlevel/Config/DefaultEditorSettings.ini
+projectlevel/WindowsNoEditor/
