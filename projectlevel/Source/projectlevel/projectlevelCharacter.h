@@ -18,6 +18,8 @@ class AprojectlevelCharacter : public ACharacter
 	/** Follow camera */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class UCameraComponent* FollowCamera;
+	
+
 
 public:
 	AprojectlevelCharacter();
@@ -32,7 +34,6 @@ public:
 
 	UPROPERTY(EditAnywhere)
 		TSubclassOf<class AMainWeapon> Spawn;
-
 
 protected:
 
@@ -61,7 +62,7 @@ protected:
 
 	void Skill();
 
-
+	class AMainWeapon* MainWeapon;
 
 protected:
 	// APawn interface
