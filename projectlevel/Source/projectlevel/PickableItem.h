@@ -27,5 +27,5 @@ public:
 	UPROPERTY(EditAnywhere)
 		class UParticleSystemComponent* Effect;
 	
-	
+	void OverlapBegins(UPrimitiveComponent * OverlappedComponent, AActor * OtherActor, UPrimitiveComponent * OtherComponent, int32 OtherbodyIdx, bool bFromSweep, const FHitResult & SweepHit);
 };

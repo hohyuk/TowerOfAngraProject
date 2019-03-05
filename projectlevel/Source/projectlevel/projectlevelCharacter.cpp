@@ -85,6 +85,10 @@ void AprojectlevelCharacter::SetupPlayerInputComponent(class UInputComponent* Pl
 	PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
 	PlayerInputComponent->BindAxis("LookUpRate", this, &AprojectlevelCharacter::LookUpAtRate);
 
+
+	//Dash
+	PlayerInputComponent->BindAction("Dash", IE_Pressed, this, &AprojectlevelCharacter::Dash);
+	PlayerInputComponent->BindAction("Dash", IE_Released, this, &AprojectlevelCharacter::Walk);
 }
 
 
@@ -99,6 +103,9 @@ void AprojectlevelCharacter::BeginPlay()
 	MainWeapon = world->SpawnActor<AMainWeapon>(AMainWeapon::StaticClass(), this->GetActorLocation(), FRotator(0, 0, 0), Sparam);
 	const USkeletalMeshSocket* Shoulder = GetMesh()->GetSocketByName("WeaponSlot");
 	Shoulder->AttachActor(MainWeapon, GetMesh());
+	MainWeapon->SetActorRelativeLocation(FVector(0, 0, -70));
+
+	
 }
 
 void AprojectlevelCharacter::ToggleSkill()
@@ -112,15 +119,15 @@ void AprojectlevelCharacter::ToggleSkill()
 	if (MainWeapon->GetAttachParentSocketName().Compare("WeaponSocket") != 0)
 	{
 		Lefthand->AttachActor(MainWeapon, GetMesh());
-		MainWeapon->SetActorRelativeLocation(FVector(0, -25, -70));
-		MainWeapon->SetActorRelativeRotation(FRotator(0, 0, 20));
+		MainWeapon->SetActorRelativeRotation(FRotator(90, 0, 0));
+		MainWeapon->SetActorRelativeLocation(FVector(90, 0, 0));
 
 	}
 	else if (MainWeapon->GetAttachParentSocketName().Compare("WeaponSlot") != 0)
 	{
 		Shoulder->AttachActor(MainWeapon, GetMesh());
-		MainWeapon->SetActorRelativeLocation(FVector(90, 0, 0));
-		MainWeapon->SetActorRelativeRotation(FRotator(90, 0, 0));
+		MainWeapon->SetActorRelativeLocation(FVector(0, 0, -70));
+		MainWeapon->SetActorRelativeRotation(FRotator(0, 0, 0));
 	}
 	
 	
@@ -134,6 +141,20 @@ void AprojectlevelCharacter::Attack()
 void AprojectlevelCharacter::Skill()
 {
 	
+}
+
+void AprojectlevelCharacter::Dash()
+{
+	while 
+	(GetCharacterMovement()->MaxWalkSpeed<1000) {
+		GetCharacterMovement()->MaxWalkSpeed += 10;
+	}
+	
+}
+
+void AprojectlevelCharacter::Walk()
+{
+	GetCharacterMovement()->MaxWalkSpeed = 300;
 }
 
 

@@ -63,6 +63,10 @@ protected:
 
 	void Skill();
 
+	void Dash();
+
+	void Walk();
+
 	class AMainWeapon* MainWeapon;
 
 protected:
