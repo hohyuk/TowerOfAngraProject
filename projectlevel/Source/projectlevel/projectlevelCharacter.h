@@ -55,6 +55,7 @@ protected:
 	 */
 	void LookUpAtRate(float Rate);
 
+	void BeginPlay();
 
 	void ToggleSkill();
 

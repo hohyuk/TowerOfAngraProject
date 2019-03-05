@@ -12,6 +12,7 @@
 #include "Components/SkeletalMeshComponent.h"
 #include "Engine.h"
 #include "MainWeapon.h"
+
 //////////////////////////////////////////////////////////////////////////
 // AprojectlevelCharacter
 
@@ -48,19 +49,12 @@ AprojectlevelCharacter::AprojectlevelCharacter()
 
 
 	//Set Character's Main Skeletal Mesh
-	static ConstructorHelpers::FObjectFinder<USkeletalMesh> CharacterMesh(TEXT("/Game/Mannequin/Character/Mesh/SK_Mannequin"));
+	static ConstructorHelpers::FObjectFinder<USkeletalMesh> CharacterMesh(TEXT("/Game/TowerofAngra/Character/woman/base"));
 	GetMesh()->SetSkeletalMesh(CharacterMesh.Object);
 	GetMesh()->SetWorldLocation(FVector(0, 0, -95.f), false, NULL, ETeleportType::None);
 	GetMesh()->SetWorldRotation(FRotator(0, -90, 0), false, NULL, ETeleportType::None);
 
-	//Set Main Weapon Actor Attach to Character Right hand 
-
-	//Set spawn infomation
-
 	
-	//UClass* MainWeapon = StaticLoadClass(UObject::StaticClass(), nullptr, TEXT("/Game/TowerofAngra/Weapon/MyMainWeapon"));
-	
-
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
 }
@@ -94,24 +88,41 @@ void AprojectlevelCharacter::SetupPlayerInputComponent(class UInputComponent* Pl
 }
 
 
-void AprojectlevelCharacter::ToggleSkill()
+void AprojectlevelCharacter::BeginPlay()
 {
+	Super::BeginPlay();
 	UWorld* world = GetWorld();
 	//Spawn Actor with Static Class
 	FActorSpawnParameters Sparam;
 	Sparam.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 	Sparam.Owner = this;
+	MainWeapon = world->SpawnActor<AMainWeapon>(AMainWeapon::StaticClass(), this->GetActorLocation(), FRotator(0, 0, 0), Sparam);
+	const USkeletalMeshSocket* Shoulder = GetMesh()->GetSocketByName("WeaponSlot");
+	Shoulder->AttachActor(MainWeapon, GetMesh());
+}
 
-	if (world != nullptr)
+void AprojectlevelCharacter::ToggleSkill()
+{
+	
+	//Get Socket from Skeletal Mesh in Main Character
+	const USkeletalMeshSocket* Lefthand = GetMesh()->GetSocketByName("WeaponSocket");
+	const USkeletalMeshSocket* Shoulder = GetMesh()->GetSocketByName("WeaponSlot");
+
+	//Main Weapon Attach to Main Character's Right hand & Set Position 
+	if (MainWeapon->GetAttachParentSocketName().Compare("WeaponSocket") != 0)
 	{
-		MainWeapon = world->SpawnActor<AMainWeapon>(AMainWeapon::StaticClass(), this->GetActorLocation(), FRotator(0, 0, 0), Sparam);
+		Lefthand->AttachActor(MainWeapon, GetMesh());
+		MainWeapon->SetActorRelativeLocation(FVector(0, -25, -70));
+		MainWeapon->SetActorRelativeRotation(FRotator(0, 0, 20));
 
-		//Get Socket from Skeletal Mesh in Main Character
-		const USkeletalMeshSocket* WeaponSocket = GetMesh()->GetSocketByName("WeaponSocket");		
-		//Main Weapon Attach to Main Character's Right hand & Set Position 
-		WeaponSocket->AttachActor(MainWeapon, GetMesh());
-		MainWeapon->SetActorRelativeLocation(FVector(5, -5, -80));
 	}
+	else if (MainWeapon->GetAttachParentSocketName().Compare("WeaponSlot") != 0)
+	{
+		Shoulder->AttachActor(MainWeapon, GetMesh());
+		MainWeapon->SetActorRelativeLocation(FVector(90, 0, 0));
+		MainWeapon->SetActorRelativeRotation(FRotator(90, 0, 0));
+	}
+	
 	
 }
 
@@ -122,26 +133,7 @@ void AprojectlevelCharacter::Attack()
 
 void AprojectlevelCharacter::Skill()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Blue, TEXT("Using Skill."));
-
-	UWorld* world = GetWorld();
-	//Spawn Actor with Static Class
-	FActorSpawnParameters Sparam;
-	Sparam.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-	Sparam.Owner = this;
-	if (world != nullptr)
-	{
-		//auto Weapon = world->SpawnActor<AMainWeapon>(AMainWeapon::StaticClass(), this->GetActorLocation(), FRotator(0, 0, 0), Sparam);
-		//Get Socket from Skeletal Mesh in Main Character
-		//const USkeletalMeshSocket* WeaponSocket = GetMesh()->GetSocketByName("WeaponSocket");
-
-		const USkeletalMeshSocket* WeaponSlot = GetMesh()->GetSocketByName("WeaponSlot");
-		//Main Weapon Attach to Main Character's Right hand & Set Position 
-		WeaponSlot->AttachActor(MainWeapon, GetMesh());
-		MainWeapon->SetActorRelativeLocation(FVector(0, -10, 70));
-		MainWeapon->SetActorRelativeRotation(FRotator(0, 0, 180));
-	}
-
+	
 }
 
 
