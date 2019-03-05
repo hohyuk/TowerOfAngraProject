@@ -69,6 +69,8 @@ protected:
 
 	class AMainWeapon* MainWeapon;
 
+	bool onDash = false;
+	void Tick(float DeltaTime);
 protected:
 	// APawn interface
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;

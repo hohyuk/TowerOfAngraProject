@@ -62,6 +62,12 @@ AprojectlevelCharacter::AprojectlevelCharacter()
 //////////////////////////////////////////////////////////////////////////
 // Input
 
+void AprojectlevelCharacter::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);	
+	
+}
+
 void AprojectlevelCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
 {
 	// Set up gameplay key bindings
@@ -87,6 +93,7 @@ void AprojectlevelCharacter::SetupPlayerInputComponent(class UInputComponent* Pl
 
 
 	//Dash
+	//PlayerInputComponent->BindAction("Dash", IE_Pressed, this, &AprojectlevelCharacter::Dash);
 	PlayerInputComponent->BindAction("Dash", IE_Pressed, this, &AprojectlevelCharacter::Dash);
 	PlayerInputComponent->BindAction("Dash", IE_Released, this, &AprojectlevelCharacter::Walk);
 }
@@ -105,7 +112,8 @@ void AprojectlevelCharacter::BeginPlay()
 	Shoulder->AttachActor(MainWeapon, GetMesh());
 	MainWeapon->SetActorRelativeLocation(FVector(0, 0, -70));
 
-	
+	//Set State walk Speed
+	GetCharacterMovement()->MaxWalkSpeed = 300;
 }
 
 void AprojectlevelCharacter::ToggleSkill()
@@ -145,16 +153,25 @@ void AprojectlevelCharacter::Skill()
 
 void AprojectlevelCharacter::Dash()
 {
-	while 
-	(GetCharacterMovement()->MaxWalkSpeed<1000) {
+	onDash = true;
+	GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Blue, TEXT("Press Dash Button."));
+	if (Controller != NULL)
+	{		
 		GetCharacterMovement()->MaxWalkSpeed += 10;
+		
 	}
-	
 }
 
 void AprojectlevelCharacter::Walk()
 {
-	GetCharacterMovement()->MaxWalkSpeed = 300;
+	onDash = false;
+	GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Blue, TEXT("imPress Dash Button."));
+	if (Controller != NULL && GetCharacterMovement()->MaxWalkSpeed>300)
+	{
+
+		GetCharacterMovement()->MaxWalkSpeed -= 10;
+
+	}
 }
 
 
