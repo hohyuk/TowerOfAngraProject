@@ -49,7 +49,7 @@ AprojectlevelCharacter::AprojectlevelCharacter()
 
 
 	//Set Character's Main Skeletal Mesh
-	static ConstructorHelpers::FObjectFinder<USkeletalMesh> CharacterMesh(TEXT("/Game/TowerofAngra/Character/woman/base"));
+	static ConstructorHelpers::FObjectFinder<USkeletalMesh> CharacterMesh(TEXT("/Game/TowerofAngra/Character/Rinda/Rinda2"));
 	GetMesh()->SetSkeletalMesh(CharacterMesh.Object);
 	GetMesh()->SetWorldLocation(FVector(0, 0, -95.f), false, NULL, ETeleportType::None);
 	GetMesh()->SetWorldRotation(FRotator(0, -90, 0), false, NULL, ETeleportType::None);
@@ -103,14 +103,14 @@ void AprojectlevelCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	UWorld* world = GetWorld();
-	//Spawn Actor with Static Class
-	FActorSpawnParameters Sparam;
-	Sparam.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-	Sparam.Owner = this;
-	MainWeapon = world->SpawnActor<AMainWeapon>(AMainWeapon::StaticClass(), this->GetActorLocation(), FRotator(0, 0, 0), Sparam);
-	const USkeletalMeshSocket* Shoulder = GetMesh()->GetSocketByName("WeaponSlot");
-	Shoulder->AttachActor(MainWeapon, GetMesh());
-	MainWeapon->SetActorRelativeLocation(FVector(0, 0, -70));
+	////Spawn Actor with Static Class
+	//FActorSpawnParameters Sparam;
+	//Sparam.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	//Sparam.Owner = this;
+	//MainWeapon = world->SpawnActor<AMainWeapon>(AMainWeapon::StaticClass(), this->GetActorLocation(), FRotator(0, 0, 0), Sparam);
+	//const USkeletalMeshSocket* Shoulder = GetMesh()->GetSocketByName("WeaponSlot");
+	//Shoulder->AttachActor(MainWeapon, GetMesh());
+	//MainWeapon->SetActorRelativeLocation(FVector(0, 0, -70));
 
 	//Set State walk Speed
 	GetCharacterMovement()->MaxWalkSpeed = 300;
@@ -119,25 +119,25 @@ void AprojectlevelCharacter::BeginPlay()
 void AprojectlevelCharacter::ToggleSkill()
 {
 	
-	//Get Socket from Skeletal Mesh in Main Character
-	const USkeletalMeshSocket* Lefthand = GetMesh()->GetSocketByName("WeaponSocket");
-	const USkeletalMeshSocket* Shoulder = GetMesh()->GetSocketByName("WeaponSlot");
+	////Get Socket from Skeletal Mesh in Main Character
+	//const USkeletalMeshSocket* Lefthand = GetMesh()->GetSocketByName("WeaponSocket");
+	//const USkeletalMeshSocket* Shoulder = GetMesh()->GetSocketByName("WeaponSlot");
 
-	//Main Weapon Attach to Main Character's Right hand & Set Position 
-	if (MainWeapon->GetAttachParentSocketName().Compare("WeaponSocket") != 0)
-	{
-		Lefthand->AttachActor(MainWeapon, GetMesh());
-		MainWeapon->SetActorRelativeRotation(FRotator(90, 0, 0));
-		MainWeapon->SetActorRelativeLocation(FVector(90, 0, 0));
+	////Main Weapon Attach to Main Character's Right hand & Set Position 
+	//if (MainWeapon->GetAttachParentSocketName().Compare("WeaponSocket") != 0)
+	//{
+	//	Lefthand->AttachActor(MainWeapon, GetMesh());
+	//	MainWeapon->SetActorRelativeRotation(FRotator(90, 0, 0));
+	//	MainWeapon->SetActorRelativeLocation(FVector(90, 0, 0));
 
-	}
-	else if (MainWeapon->GetAttachParentSocketName().Compare("WeaponSlot") != 0)
-	{
-		Shoulder->AttachActor(MainWeapon, GetMesh());
-		MainWeapon->SetActorRelativeLocation(FVector(0, 0, -70));
-		MainWeapon->SetActorRelativeRotation(FRotator(0, 0, 0));
-	}
-	
+	//}
+	//else if (MainWeapon->GetAttachParentSocketName().Compare("WeaponSlot") != 0)
+	//{
+	//	Shoulder->AttachActor(MainWeapon, GetMesh());
+	//	MainWeapon->SetActorRelativeLocation(FVector(0, 0, -70));
+	//	MainWeapon->SetActorRelativeRotation(FRotator(0, 0, 0));
+	//}
+	//
 	
 }
 
