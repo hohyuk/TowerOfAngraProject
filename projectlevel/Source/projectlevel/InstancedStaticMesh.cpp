@@ -11,7 +11,7 @@ AInstancedStaticMesh::AInstancedStaticMesh()
 	PrimaryActorTick.bCanEverTick = true;
 	InstMesh = CreateDefaultSubobject<UInstancedStaticMeshComponent>(TEXT("Instanced Mesh"));
 	InstMat = CreateDefaultSubobject<UMaterial>(TEXT("Instanced Material"));
-	static ConstructorHelpers::FObjectFinder<UStaticMesh> IMesh(TEXT("/Game/TowerofAngra/Object/SM_Barrel"));
+	//static ConstructorHelpers::FObjectFinder<UStaticMesh> IMesh(TEXT("/Game/TowerofAngra/Object/SM_Barrel"));
 	
 	RootComponent = InstMesh;
 	
@@ -37,6 +37,7 @@ void AInstancedStaticMesh::BeginPlay()
 			FTransform InstanceTransform;
 			FVector SpawnLocation((x-(XPibot/2))*interval, (y-(YPibot/2))*interval, 0.0f);
 			InstanceTransform.SetLocation(SpawnLocation);
+			InstMesh->SetMaterial(0,InstMat);
 			InstMesh->AddInstance(InstanceTransform);
 		}
 	}

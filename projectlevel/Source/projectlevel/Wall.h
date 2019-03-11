@@ -5,7 +5,15 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Wall.generated.h"
-
+//Set Wall Direction by enumeration
+UENUM()
+enum class EDirection : uint8
+{
+	DIR_RIGHT	UMETA(DisplayName = "Right"),
+	DIR_LEFT	UMETA(DisplayName = "Left"),
+	DIR_FRONT	UMETA(DisplayName = "FRONT"),
+	DIR_BACK	UMETA(DisplayName = "BACK"),
+};
 UCLASS()
 class PROJECTLEVEL_API AWall : public AActor
 {
@@ -23,16 +31,8 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	UPROPERTY(Category = Direction)
+	UPROPERTY(EditAnywhere, Category = Direction)
 		EDirection Dir;
-	UPROPERTY(Category = WallType)
+	UPROPERTY(VisibleAnywhere, Category = WallType)
 		UStaticMeshComponent* Wall;
-};
-//Set Wall Direction by enumeration
-enum class EDirection : uint8
-{
-	DIR_RIGHT	UMETA(DisplayName = "Right"),
-	DIR_LEFT	UMETA(DisplayName = "Left"),
-	DIR_FRONT	UMETA(DisplayName = "FRONT"),
-	DIR_BACK	UMETA(DisplayName = "BACK"),
 };

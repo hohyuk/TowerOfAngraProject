@@ -110,7 +110,7 @@ void AprojectlevelCharacter::BeginPlay()
 	MainWeapon = world->SpawnActor<AMainWeapon>(AMainWeapon::StaticClass(), this->GetActorLocation(), FRotator(0, 0, 0), Sparam);
 	const USkeletalMeshSocket* Shoulder = GetMesh()->GetSocketByName("WeaponSlot");
 	Shoulder->AttachActor(MainWeapon, GetMesh());
-	MainWeapon->SetActorRelativeLocation(FVector(0, 0, -70));
+	MainWeapon->SetActorRelativeLocation(FVector(0, 0, 0));
 
 	//Set State walk Speed
 	GetCharacterMovement()->MaxWalkSpeed = 300;
@@ -127,14 +127,14 @@ void AprojectlevelCharacter::ToggleSkill()
 	if (MainWeapon->GetAttachParentSocketName().Compare("WeaponSocket") != 0)
 	{
 		Lefthand->AttachActor(MainWeapon, GetMesh());
-		MainWeapon->SetActorRelativeRotation(FRotator(90, 0, 0));
-		MainWeapon->SetActorRelativeLocation(FVector(90, 0, 0));
+		MainWeapon->SetActorRelativeRotation(FRotator(0, 0, 0));
+		MainWeapon->SetActorRelativeLocation(FVector(0, 0, 0));
 
 	}
 	else if (MainWeapon->GetAttachParentSocketName().Compare("WeaponSlot") != 0)
 	{
 		Shoulder->AttachActor(MainWeapon, GetMesh());
-		MainWeapon->SetActorRelativeLocation(FVector(0, 0, -70));
+		MainWeapon->SetActorRelativeLocation(FVector(0, 0, 0));
 		MainWeapon->SetActorRelativeRotation(FRotator(0, 0, 0));
 	}
 	

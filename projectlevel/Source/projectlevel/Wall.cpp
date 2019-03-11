@@ -18,19 +18,19 @@ void AWall::BeginPlay()
 {
 	Super::BeginPlay();
 	//Set Rotation by Enumeration
-	if (Dir = EDirection::DIR_FRONT)
+	if (Dir == EDirection::DIR_FRONT)
 	{
 		Wall->SetRelativeRotation(FRotator(0,0,0));
 	}
-	else if (Dir = EDirection::DIR_BACK)
+	else if (Dir == EDirection::DIR_BACK)
 	{
 		Wall->SetRelativeRotation(FRotator(0, 90, 0));
 	}
-	else if (Dir = EDirection::DIR_RIGHT)
+	else if (Dir == EDirection::DIR_RIGHT)
 	{
 		Wall->SetRelativeRotation(FRotator(0, 180, 0));
 	}
-	else if (Dir = EDirection::DIR_LEFT)
+	else if (Dir == EDirection::DIR_LEFT)
 	{
 		Wall->SetRelativeRotation(FRotator(0, 270, 0));
 	}

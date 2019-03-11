@@ -23,6 +23,13 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	
+	UPROPERTY(VisibleAnywhere, Category = Door)
+		UStaticMeshComponent* DoorLeft;
+	UPROPERTY(VisibleAnywhere, Category = Door)
+		UStaticMeshComponent* DoorRight;
+	UPROPERTY(VisibleAnywhere, Category = Door)
+		UStaticMeshComponent* DoorFrame;
+	UPROPERTY(VisibleAnywhere, Category = Door)
+		class UBoxComponent* OverlapVolume;
 	
 };
