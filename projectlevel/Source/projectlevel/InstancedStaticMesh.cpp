@@ -28,6 +28,7 @@ void AInstancedStaticMesh::BeginPlay()
 	Super::BeginPlay();
 	InstMesh->RegisterComponent();
 	InstMesh->SetFlags(RF_Transactional);
+	InstMesh->SetMaterial(0, InstMat);
 	this->AddInstanceComponent(InstMesh);
 	//Set Instance Transform & Location
 	for (int x = 0; x < XPibot; x++)
@@ -37,7 +38,7 @@ void AInstancedStaticMesh::BeginPlay()
 			FTransform InstanceTransform;
 			FVector SpawnLocation((x-(XPibot/2))*interval, (y-(YPibot/2))*interval, 0.0f);
 			InstanceTransform.SetLocation(SpawnLocation);
-			InstMesh->SetMaterial(0,InstMat);
+			
 			InstMesh->AddInstance(InstanceTransform);
 		}
 	}

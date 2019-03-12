@@ -19,7 +19,8 @@ class AprojectlevelCharacter : public ACharacter
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class UCameraComponent* FollowCamera;
 	
-
+	UPROPERTY(EditDefaultsOnly, Category = Projectile)
+		TSubclassOf<class ASkillEffect> SkillEffect;
 
 public:
 	AprojectlevelCharacter();
@@ -71,11 +72,14 @@ protected:
 
 	bool onDash = false;
 	void Tick(float DeltaTime);
+	class UAnimSequence* SkillAnim;
+	class UAnimSequence* IdleAnim;
 protected:
 	// APawn interface
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	// End of APawn interface
-
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
+		FVector SkillOffset;
 public:
 	/** Returns CameraBoom subobject **/
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
