@@ -39,16 +39,16 @@ void ALevelChanger::OverlapBegins(UPrimitiveComponent * OverlappedComponent, AAc
 	{
 		FLatentActionInfo ActionInfo;
 		UGameplayStatics::LoadStreamLevel(this, LoadLevelName, true, true, ActionInfo);
-		UGameplayStatics::UnloadStreamLevel(this, UnLoadLevelName, ActionInfo, true);
+		//UGameplayStatics::UnloadStreamLevel(this, UnLoadLevelName, ActionInfo, true);
 		MileStone->SetWorldScale3D(FVector(0, 0, 0));
 		
 	}
-	if (OtherActor == MyChar && LoadLevelName == "TestGridMap")
+	if (OtherActor == MyChar && OpenLevelName != "")
 	{
 		
-		UGameplayStatics::OpenLevel(this, LoadLevelName);
+		UGameplayStatics::OpenLevel(this, OpenLevelName);
 
-		MileStone->SetWorldScale3D(FVector(0, 0, 0));
+
 	}
 }
 

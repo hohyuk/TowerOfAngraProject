@@ -28,7 +28,7 @@ public:
 	UPROPERTY(EditAnywhere)
 		FName LoadLevelName;
 	UPROPERTY(EditAnywhere)
-		FName UnLoadLevelName;
+		FName OpenLevelName;
 	UPROPERTY(EditAnywhere)
 		class UStaticMeshComponent* MileStone;
 private:
