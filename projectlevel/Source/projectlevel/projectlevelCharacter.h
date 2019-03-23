@@ -36,6 +36,9 @@ public:
 	UPROPERTY(EditAnywhere)
 		TSubclassOf<class AMainWeapon> Spawn;
 
+	UPROPERTY(EditAnywhere)
+		TArray<class APickableItem*> Inventory;
+	void AddToInventory(class APickableItem* item);
 protected:
 
 
@@ -74,6 +77,8 @@ protected:
 	void Tick(float DeltaTime);
 	class UAnimSequence* SkillAnim;
 	class UAnimSequence* IdleAnim;
+
+	
 protected:
 	// APawn interface
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;

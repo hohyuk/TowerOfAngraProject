@@ -18,14 +18,20 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+	
 
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 	UPROPERTY(EditAnywhere)
+		class USceneComponent* SceneComponent;
+	UPROPERTY(EditAnywhere)
 		class UStaticMeshComponent* ItemMesh;
 	UPROPERTY(EditAnywhere)
-		class UParticleSystemComponent* Effect;
-	
-	void OverlapBegins(UPrimitiveComponent * OverlappedComponent, AActor * OtherActor, UPrimitiveComponent * OtherComponent, int32 OtherbodyIdx, bool bFromSweep, const FHitResult & SweepHit);
+		class UBoxComponent* CollisionVolume;
+	void Show(bool lean);
+
+	void OnInteract();
+	UFUNCTION()
+		void OverlapBegins(UPrimitiveComponent * OverlappedComponent, AActor * OtherActor, UPrimitiveComponent * OtherComponent, int32 OtherbodyIdx, bool bFromSweep, const FHitResult & SweepHit);
 };

@@ -3,15 +3,30 @@
 #include "PickableItem.h"
 #include "Components/StaticMeshComponent.h"
 #include "ConstructorHelpers.h"
+#include "projectlevelCharacter.h"
 #include "Engine.h"
 // Sets default values
 APickableItem::APickableItem()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+
+
+	//Set RootComponent 
+	SceneComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
+	RootComponent = SceneComponent;
+	//Set item's Mesh
 	ItemMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("ItemMesh"));
-	//Effect = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("Effect"));
-	RootComponent = ItemMesh;
+	ItemMesh->AttachToComponent(RootComponent, FAttachmentTransformRules::SnapToTargetIncludingScale);;
+	
+	//Set Collision Volume
+	CollisionVolume = CreateDefaultSubobject<UBoxComponent>(TEXT("Collsion"));
+	CollisionVolume->SetGenerateOverlapEvents(true);
+	CollisionVolume->SetWorldScale3D(FVector(2.0, 2.0, 2.0));
+	CollisionVolume->OnComponentBeginOverlap.AddDynamic(this, &APickableItem::OverlapBegins);
+	CollisionVolume->AttachToComponent(RootComponent,FAttachmentTransformRules::SnapToTargetIncludingScale);
+
+
 	
 }
 
@@ -19,8 +34,11 @@ APickableItem::APickableItem()
 void APickableItem::BeginPlay()
 {
 	Super::BeginPlay();
+
+	//set Mesh Outline Setting
 	ItemMesh->SetRenderCustomDepth(true);
 	ItemMesh->CustomDepthStencilValue = 254;
+
 
 }
 
@@ -31,13 +49,36 @@ void APickableItem::Tick(float DeltaTime)
 	AddActorLocalRotation(FRotator(0, 1, 0));
 }
 
+void APickableItem::Show(bool lean)
+{
+	ECollisionEnabled::Type collision = false ?
+		ECollisionEnabled::QueryAndPhysics :
+		ECollisionEnabled::NoCollision;
+
+	this->SetActorTickEnabled(false);
+	this->ItemMesh->SetVisibility(false);
+	this->ItemMesh->SetCollisionEnabled(collision);
+}
+
+void APickableItem::OnInteract()
+{
+	AprojectlevelCharacter * Character = Cast<AprojectlevelCharacter>(UGameplayStatics::GetPlayerCharacter(this, 0));
+	
+	if (Character)
+	{
+		Show(false);
+		Character->AddToInventory(this);
+	}
+}
+
 void APickableItem::OverlapBegins(UPrimitiveComponent * OverlappedComponent, AActor * OtherActor, UPrimitiveComponent * OtherComponent, int32 OtherbodyIdx, bool bFromSweep, const FHitResult & SweepHit)
 {
-	ACharacter* MyCharacter = UGameplayStatics::GetPlayerCharacter(this, 0);
-	if (OtherActor == MyCharacter)
+	
+	if ((OtherActor != nullptr) && (OtherActor != this) && (OtherComponent != nullptr))
 	{
-		
-
+		GEngine->AddOnScreenDebugMessage(1, 5, FColor::Red, TEXT("Get Item"));
+		//Show(false);
+		Destroy();
 	}
 }
 

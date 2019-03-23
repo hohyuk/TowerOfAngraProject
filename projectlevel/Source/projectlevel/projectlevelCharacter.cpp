@@ -13,6 +13,7 @@
 #include "Engine.h"
 #include "MainWeapon.h"
 #include "SkillEffect.h"
+#include "PickableItem.h"
 
 //////////////////////////////////////////////////////////////////////////
 // AprojectlevelCharacter
@@ -69,6 +70,13 @@ void AprojectlevelCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);	
 	
+}
+
+
+
+void AprojectlevelCharacter::AddToInventory(APickableItem * item)
+{
+	Inventory.Add(item);
 }
 
 void AprojectlevelCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
