@@ -71,6 +71,8 @@ protected:
 
 	void Walk();
 
+	void OpenInventory();
+
 	class AMainWeapon* MainWeapon;
 
 	bool onDash = false;

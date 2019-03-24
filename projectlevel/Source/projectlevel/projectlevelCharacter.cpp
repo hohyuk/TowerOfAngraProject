@@ -107,6 +107,9 @@ void AprojectlevelCharacter::SetupPlayerInputComponent(class UInputComponent* Pl
 	//PlayerInputComponent->BindAction("Dash", IE_Pressed, this, &AprojectlevelCharacter::Dash);
 	PlayerInputComponent->BindAction("Dash", IE_Pressed, this, &AprojectlevelCharacter::Dash);
 	PlayerInputComponent->BindAction("Dash", IE_Released, this, &AprojectlevelCharacter::Walk);
+
+	//Open Inventory
+	PlayerInputComponent->BindAction("Inventory", IE_Pressed, this, &AprojectlevelCharacter::OpenInventory);
 }
 
 
@@ -187,9 +190,7 @@ void AprojectlevelCharacter::Skill()
 				FVector LaunchDirection = SkillRotation.Vector();
 				Projectile->FireInDirection(LaunchDirection);
 			}
-		}
-		
-		
+		}			
 	}
 }
 	
@@ -215,6 +216,14 @@ void AprojectlevelCharacter::Walk()
 
 		GetCharacterMovement()->MaxWalkSpeed -= 10;
 
+	}
+}
+
+void AprojectlevelCharacter::OpenInventory()
+{
+	for (APickableItem* item : Inventory)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 10, FColor::White, item->GetName());
 	}
 }
 

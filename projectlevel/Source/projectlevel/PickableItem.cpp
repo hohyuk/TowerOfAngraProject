@@ -78,6 +78,7 @@ void APickableItem::OverlapBegins(UPrimitiveComponent * OverlappedComponent, AAc
 	{
 		GEngine->AddOnScreenDebugMessage(1, 5, FColor::Red, TEXT("Get Item"));
 		//Show(false);
+		OnInteract();
 		Destroy();
 	}
 }
