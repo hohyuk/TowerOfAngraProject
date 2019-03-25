@@ -2,6 +2,7 @@
 
 #include "PickableItem.h"
 #include "Components/StaticMeshComponent.h"
+#include "Components/SphereComponent.h"
 #include "ConstructorHelpers.h"
 #include "projectlevelCharacter.h"
 #include "Engine.h"
@@ -20,7 +21,8 @@ APickableItem::APickableItem()
 	ItemMesh->AttachToComponent(RootComponent, FAttachmentTransformRules::SnapToTargetIncludingScale);;
 	
 	//Set Collision Volume
-	CollisionVolume = CreateDefaultSubobject<UBoxComponent>(TEXT("Collsion"));
+	CollisionVolume = CreateDefaultSubobject<USphereComponent>(TEXT("Collsion"));
+	CollisionVolume->InitSphereRadius(100.0f);
 	CollisionVolume->SetGenerateOverlapEvents(true);
 	CollisionVolume->SetWorldScale3D(FVector(2.0, 2.0, 2.0));
 	CollisionVolume->OnComponentBeginOverlap.AddDynamic(this, &APickableItem::OverlapBegins);

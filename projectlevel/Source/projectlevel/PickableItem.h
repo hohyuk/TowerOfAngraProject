@@ -28,7 +28,7 @@ public:
 	UPROPERTY(EditAnywhere)
 		class UStaticMeshComponent* ItemMesh;
 	UPROPERTY(EditAnywhere)
-		class UBoxComponent* CollisionVolume;
+		class USphereComponent* CollisionVolume;
 	void Show(bool lean);
 
 	void OnInteract();
