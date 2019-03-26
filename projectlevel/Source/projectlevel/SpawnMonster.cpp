@@ -3,7 +3,6 @@
 #include "SpawnMonster.h"
 #include "Engine.h"
 #include "Monster.h"
-
 // Sets default values
 ASpawnMonster::ASpawnMonster()
 {
@@ -13,6 +12,8 @@ ASpawnMonster::ASpawnMonster()
 
 	Root = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
 	RootComponent = Root;
+
+
 }
 
 // Called when the game starts or when spawned
@@ -33,6 +34,8 @@ void ASpawnMonster::Tick(float DeltaTime)
 	FActorSpawnParameters Sparam;
 	Sparam.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 	Sparam.Owner = this;
+	//static ConstructorHelpers::FObjectFinder<AMonster> Monster(TEXT("/Game/Monster2"));
+
 	world->SpawnActor<AMonster>(AMonster::StaticClass(), this->GetActorLocation(), FRotator(0, 0, 0), Sparam);
 }
 

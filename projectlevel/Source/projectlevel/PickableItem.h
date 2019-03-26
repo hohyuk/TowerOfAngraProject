@@ -23,15 +23,18 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+	
+	void Show(bool lean);
+	void OnInteract();
 	UPROPERTY(EditAnywhere)
 		class USceneComponent* SceneComponent;
 	UPROPERTY(EditAnywhere)
 		class UStaticMeshComponent* ItemMesh;
 	UPROPERTY(EditAnywhere)
-		class USphereComponent* CollisionVolume;
-	void Show(bool lean);
-
-	void OnInteract();
+		class UBoxComponent* BoxCollider;
 	UFUNCTION()
-		void OverlapBegins(UPrimitiveComponent * OverlappedComponent, AActor * OtherActor, UPrimitiveComponent * OtherComponent, int32 OtherbodyIdx, bool bFromSweep, const FHitResult & SweepHit);
+		void OverlapBegins(UPrimitiveComponent * OverlappedComponent, AActor * OtherActor,
+			UPrimitiveComponent * OtherComponent, int32 OtherbodyIdx, bool bFromSweep, const FHitResult & SweepHit);
+
+
 };

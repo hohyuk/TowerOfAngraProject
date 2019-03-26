@@ -2,7 +2,7 @@
 
 #include "PickableItem.h"
 #include "Components/StaticMeshComponent.h"
-#include "Components/SphereComponent.h"
+#include "Components/BoxComponent.h"
 #include "ConstructorHelpers.h"
 #include "projectlevelCharacter.h"
 #include "Engine.h"
@@ -18,16 +18,14 @@ APickableItem::APickableItem()
 	RootComponent = SceneComponent;
 	//Set item's Mesh
 	ItemMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("ItemMesh"));
-	ItemMesh->AttachToComponent(RootComponent, FAttachmentTransformRules::SnapToTargetIncludingScale);;
-	
+	//ItemMesh->AttachToComponent(RootComponent, FAttachmentTransformRules::SnapToTargetIncludingScale);
+	ItemMesh->SetupAttachment(RootComponent);
 	//Set Collision Volume
-	CollisionVolume = CreateDefaultSubobject<USphereComponent>(TEXT("Collsion"));
-	CollisionVolume->InitSphereRadius(100.0f);
-	CollisionVolume->SetGenerateOverlapEvents(true);
-	CollisionVolume->SetWorldScale3D(FVector(2.0, 2.0, 2.0));
-	CollisionVolume->OnComponentBeginOverlap.AddDynamic(this, &APickableItem::OverlapBegins);
-	CollisionVolume->AttachToComponent(RootComponent,FAttachmentTransformRules::SnapToTargetIncludingScale);
-
+	BoxCollider = CreateDefaultSubobject<UBoxComponent>(TEXT("Box Collider"));
+	BoxCollider->SetupAttachment(RootComponent);
+	BoxCollider->SetGenerateOverlapEvents(true);
+	BoxCollider->SetWorldScale3D(FVector(2.f, 2.f, 2.f));
+	BoxCollider->OnComponentBeginOverlap.AddDynamic(this, &APickableItem::OverlapBegins);
 
 	
 }
