@@ -28,4 +28,10 @@ public:
 
 	class AprojectlevelCharacter* Target;
 	
+
+	// UI ÀÛ¾÷
+public:
+	UPROPERTY(VisibleAnywhere, Category = UI)
+	class UWidgetComponent* HPBarWidget;
+
 };

@@ -3,6 +3,7 @@
 #include "Monster.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/SkeletalMeshComponent.h"
+#include "Components/WidgetComponent.h"
 #include "ConstructorHelpers.h"
 #include "projectlevelCharacter.h"
 #include "Engine.h"
@@ -18,6 +19,19 @@ AMonster::AMonster()
 	GetMesh()->SetSkeletalMesh(MonsterMesh.Object);
 	GetMesh()->SetWorldLocation(FVector(0, 0, -100.f), false, NULL, ETeleportType::None);
 	GetMesh()->SetWorldRotation(FRotator(0, -90, 0), false, NULL, ETeleportType::None);
+
+	// UI
+	HPBarWidget = CreateDefaultSubobject<UWidgetComponent>(TEXT("HPBARWIDGET"));
+	HPBarWidget->SetupAttachment(GetMesh());
+
+	HPBarWidget->SetRelativeLocation(FVector(0.f, 0.f, 180.f));
+	HPBarWidget->SetWidgetSpace(EWidgetSpace::Screen);
+	static ConstructorHelpers::FClassFinder<UUserWidget> UI_HUD(TEXT("/Game/TowerofAngra/UI/UI_HPBar.UI_HPBar_C"));
+	if (UI_HUD.Succeeded())
+	{
+		HPBarWidget->SetWidgetClass(UI_HUD.Class);
+		HPBarWidget->SetDrawSize(FVector2D(150.f, 50.f));
+	}
 }
 
 // Called when the game starts or when spawned
