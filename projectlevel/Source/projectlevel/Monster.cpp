@@ -15,7 +15,7 @@ AMonster::AMonster()
 	//Set Monster's Collision Bound by Capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 100.0f);
 
-	static ConstructorHelpers::FObjectFinder<USkeletalMesh> MonsterMesh(TEXT("/Game/TowerofAngra/Character/Mannequin/Mesh/SK_Mannequin"));
+	static ConstructorHelpers::FObjectFinder<USkeletalMesh> MonsterMesh(TEXT("/Game/Mannequin/Character/Mesh/SK_Mannequin"));
 	GetMesh()->SetSkeletalMesh(MonsterMesh.Object);
 	GetMesh()->SetWorldLocation(FVector(0, 0, -100.f), false, NULL, ETeleportType::None);
 	GetMesh()->SetWorldRotation(FRotator(0, -90, 0), false, NULL, ETeleportType::None);
@@ -45,11 +45,7 @@ void AMonster::BeginPlay()
 void AMonster::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	FVector Dir = Target->GetActorLocation()- GetActorLocation();
-
 	
-	//ctorNormalize(Dir);
-	AddActorWorldOffset(Dir);
 }
 
 // Called to bind functionality to input
