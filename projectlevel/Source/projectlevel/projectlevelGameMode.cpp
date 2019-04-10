@@ -5,6 +5,8 @@
 #include "UObject/ConstructorHelpers.h"
 #include "projectlevelCharacter.h"
 #include "Engine.h"
+#include "UIPlayerController.h"
+
 AprojectlevelGameMode::AprojectlevelGameMode()
 {
 	LoadFirstLevel = "NewWorld_1";
@@ -18,4 +20,6 @@ AprojectlevelGameMode::AprojectlevelGameMode()
 	
 	FLatentActionInfo ActionInfo;
 	UGameplayStatics::LoadStreamLevel(this, LoadFirstLevel, true, true, ActionInfo);
+	PlayerControllerClass = APlayerController::StaticClass();
+
 }
