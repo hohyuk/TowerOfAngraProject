@@ -14,7 +14,7 @@
 #include "MainWeapon.h"
 #include "SkillEffect.h"
 #include "PickableItem.h"
-
+#include "UIPlayerController.h"
 //////////////////////////////////////////////////////////////////////////
 // AprojectlevelCharacter
 
@@ -127,6 +127,8 @@ void AprojectlevelCharacter::BeginPlay()
 
 	//Set State walk Speed
 	GetCharacterMovement()->MaxWalkSpeed = 300;
+
+	UIPlayerController = Cast<AUIPlayerController>(GetController());
 }
 
 void AprojectlevelCharacter::ToggleSkill()

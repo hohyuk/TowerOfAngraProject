@@ -20,6 +20,11 @@ AprojectlevelGameMode::AprojectlevelGameMode()
 	
 	FLatentActionInfo ActionInfo;
 	UGameplayStatics::LoadStreamLevel(this, LoadFirstLevel, true, true, ActionInfo);
-	PlayerControllerClass = APlayerController::StaticClass();
 
+	PlayerControllerClass = AUIPlayerController::StaticClass();
+}
+
+void AprojectlevelGameMode::PostLogin(APlayerController * NewPlayer)
+{
+	Super::PostLogin(NewPlayer);
 }
