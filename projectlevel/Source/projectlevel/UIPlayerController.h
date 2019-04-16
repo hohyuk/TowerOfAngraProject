@@ -25,7 +25,12 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = UI)
 	TSubclassOf<class UHUDWidget> HUDWidgetClass;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = UI)
+	TSubclassOf<class UUserWidget> UIWidgetClass;
 private:
 	UPROPERTY()
 	class UHUDWidget* HUDWidget;
+
+	UPROPERTY()
+	class UUserWidget* UIWidgetInstance;
 };
