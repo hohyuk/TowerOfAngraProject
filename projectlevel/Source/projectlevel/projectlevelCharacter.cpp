@@ -222,10 +222,12 @@ void AprojectlevelCharacter::Walk()
 
 void AprojectlevelCharacter::OpenInventory()
 {
-	for (APickableItem* item : Inventory)
+	/*for (APickableItem* item : Inventory)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 10, FColor::White, item->GetName());
-	}
+	}*/
+
+
 }
 
 
