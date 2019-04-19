@@ -32,6 +32,11 @@ public:
 		class UStaticMeshComponent* ItemMesh;
 	UPROPERTY(EditAnywhere)
 		class UBoxComponent* BoxCollider;
+
+	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = Pickup)
+		FString ItemName;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Pickup)
+		UTexture2D* ItemImage;
 	UFUNCTION()
 		void OverlapBegins(UPrimitiveComponent * OverlappedComponent, AActor * OtherActor,
 			UPrimitiveComponent * OtherComponent, int32 OtherbodyIdx, bool bFromSweep, const FHitResult & SweepHit);

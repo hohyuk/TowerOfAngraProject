@@ -6,6 +6,8 @@
 #include "GameFramework/Character.h"
 #include "projectlevelCharacter.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FUpadateInventoryDelegate, const TArray<class APickableItem*>&, UI_itemslot);
+
 UCLASS(config=Game)
 class AprojectlevelCharacter : public ACharacter
 {
@@ -71,12 +73,22 @@ protected:
 
 	void Walk();
 
+	//Open Inventory
+	UFUNCTION(BlueprintCallable)
 	void OpenInventory();
 
+	//Send Item infomation to UI_itemslot
+	UPROPERTY(BlueprintAssignable, Category = Pickup)
+		FUpadateInventoryDelegate OnUpdateInventory;
+	//Character's weapon actor
 	class AMainWeapon* MainWeapon;
 
+	//set dash/walk mode 
 	bool onDash = false;
+
 	void Tick(float DeltaTime);
+
+	//Animation 
 	class UAnimSequence* SkillAnim;
 	class UAnimSequence* IdleAnim;
 

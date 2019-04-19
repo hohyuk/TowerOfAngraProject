@@ -226,7 +226,7 @@ void AprojectlevelCharacter::OpenInventory()
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 10, FColor::White, item->GetName());
 	}*/
-
+	OnUpdateInventory.Broadcast(Inventory);
 
 }
 
