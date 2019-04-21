@@ -3,6 +3,9 @@
 #include "GameManager.h"
 #include "Monster.h"
 #include "Engine/World.h"
+#include<vector>
+#include<string>
+#include<algorithm>
 
 // Sets default values
 AGameManager::AGameManager()
@@ -16,7 +19,7 @@ AGameManager::AGameManager()
 void AGameManager::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
 }
 
 // Called every frame
